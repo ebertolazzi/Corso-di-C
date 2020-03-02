@@ -1,19 +1,42 @@
-/* 
+/*
+
+  Occupazione in byte dei tipi principali in C
+
  */
 
+/*
+ uso direttiva di compilazione
+
+ #include <file>
+
+ dove <> indica di cercare il file corrispondente
+ nelle directory di sistema per il compilatore C
+ normalmente /usr/include
+
+*/
+/* inclusione dei prototipi della libreria standard del C per I/O */
+/* qui usiamo solo printf */
 #include <stdio.h>
 
 int
 main() {
 
-  char        a ;
-  int         b ;
-  short       c ;
-  long        d ;
-  long long   e ;
-  float       f ;
-  double      g ;
-  long double h ;
+  char        a;
+  int         b;
+  short       c;
+  long        d;
+  long long   e;
+  float       f;
+  double      g;
+  long double h;
+
+  /*
+
+    printf( "formato", argomenti )
+
+    il formato e una stringa 
+
+   */
   
   printf("Stampa della occupazione in memoria dei tipi standard\n") ;
   printf("sizeof(char)        = %d\n", sizeof(char)) ;
@@ -39,5 +62,7 @@ main() {
 
 /*
   per compilarlo uso su macchine UNIX
-  > gcc esempio2.c -o esempio2
+  la opzione -Wall attiva tutti i warning di compilazione
+
+  > gcc -Wall esempio2.c -o esempio2
 */
