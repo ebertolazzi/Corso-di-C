@@ -9,7 +9,6 @@
 
 struct timeval tbegin, tend;
 
-
 static void start() { gettimeofday(&tbegin, NULL); }
 static void stop()  { gettimeofday(&tend, NULL); }
 
@@ -35,7 +34,11 @@ static /* la funzione is_prime e;' visibile solo il questo file */
 int
 is_prime( int n ) {
   int i;
-  for ( i = 2; i < n; ++i ) {
+  /* check se numero pari, estraggo primo bit ==> se 0 e pari */
+  if ( (n&0x01) == 0 && n != 2 ) return 1;
+  /* mi fermo a i <= sqrt(n), i = numero pari lo salto */
+  /* divido per 3., 5, 7, 9. etc                       */
+  for ( i = 3; i*i <= n; i += 2 ) {
     /* controllo se i divide n, se si esco con 1 cioe' non primo */
     if ( (n % i) == 0 ) return 1;
   }
@@ -53,7 +56,10 @@ main() {
   start();
   for ( i = 2; i <= n; ++i ) {
     ok_e_primo = is_prime( i );
-    if ( ok_e_primo == 0 ) ++count;
+    if ( ok_e_primo == 0 ) { 
+      /* printf("%d\n",i); */
+      ++count;
+    }
   }
   stop();
   
