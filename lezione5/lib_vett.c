@@ -1,36 +1,7 @@
-// Libreria di input-output
 #include <stdio.h>
-//Include atoi
 #include <stdlib.h>
 
-int inserisci_elemento(int *vett, int *ind){
-    // Stringa 
-    char s[9];
-    // Intero letto
-    int n;
-    
-    printf("Inserisci un numero:");
-    //c = getchar(); getchar(); 
-    // Leggo una stringa
-    // http://www.cplusplus.com/reference/cstdio/scanf/
-    scanf(" %9s",s); // %9 significa che leggo al massimo 9 caratteri
-    printf("Strina letta: %s\n",s);
-    
-    // Controllo per verifare se ho letto 'f'
-    if( s[0] == 'f' ){
-        return 1;
-    }
-
-    // Conversione della stringa s in intero
-    // https://en.cppreference.com/w/cpp/string/byte/atoi
-    n = atoi(s);
-    // Inserisco l'elemento dentro al vettore
-    vett[(*ind)++] = n;
-
-    return 0;
-}
-
-void stampa_vettore(int vett[], int size){
+void stampa_vettore(const int vett[], int size){
     //Indice per il for
     int j;
     //Controllo vettore vuoto
@@ -44,4 +15,30 @@ void stampa_vettore(int vett[], int size){
         printf("%d,",vett[j]);
     }
     printf("%d]\n",vett[j]);
+}
+
+int inserisci_elemento(int *vett, int *ind){
+    //Stringa 
+    char s[5];
+    //Intero letto
+    int n;
+    
+    printf("Inserisci un numero:");
+    //c = getchar(); getchar(); 
+    // Leggo una stringa
+    scanf(" %5s",s);
+    printf("Strina letta: %s\n",s);
+    
+    //Controllo per verifare se ho letto 'f'
+    if( s[0] == 'f' ){
+        return 1;
+    }
+
+    //Conversione della stringa s in intero
+    //https://en.cppreference.com/w/cpp/string/byte/atoi
+    n = atoi(s);
+    //Inserisco l'elemento dentro al vettore
+    vett[(*ind)++] = n;
+
+    return 0;
 }
