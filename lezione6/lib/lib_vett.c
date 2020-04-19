@@ -27,7 +27,7 @@ int inserisci_elemento(int *vett, int *ind){
     //c = getchar(); getchar(); 
     // Leggo una stringa
     scanf(" %5s",s);
-    printf("Stringa letta: %s\n",s);
+    printf("Strina letta: %s\n",s);
     
     //Controllo per verifare se ho letto 'f'
     if( s[0] == 'f' ){

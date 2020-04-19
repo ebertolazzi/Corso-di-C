@@ -1,28 +1,45 @@
-//Libreria di input-output
 #include <stdio.h>
-
-//Libreria per includere la funzione exit
 #include <stdlib.h>
+
+// Riferimento alla libreria poly perché usiamo SIZE e struct polinomio
+#include "lib_poly.h"
 
 //Libreria per le funzioni su file
 #include "lib_file.h"
 
-//Devo includere la lib_polinomi
-#include "lib_polinomi.h"
+void stampa_vettore_polinomio(const struct polinomio* poly){
+    //Indice per il for
+    int j;
+    //Controllo polinomio è vuoto
+    if(poly->size == 0){
+        printf("Il polinomio è vuoto\n");
+        return;
+    }
+    //Stampare il contenuto di vett
+    printf("Il vettore del polinomio è composto da:\n[");
+    for(j = 0 ; j < poly->size - 1 ; j++){
+        printf("%d,",poly->vett[j]);
+    }
+    printf("%d]\n",poly->vett[j]);
+}
 
-
-//Funzione inserisci elemento usando una struttura
-int inserisci_elemento_polinomio(struct polinomio *poly){
+int inserisci_elemento_polinomio(struct polinomio* poly){
     //Stringa 
     char s[5];
     //Intero letto
     int n;
     
-    printf("Inserisci coefficente %d:",poly->size);
+    // Controlliamo di non uscire dal vettore
+    if(poly->size >= SIZE){
+        printf("Polinomio è pieno!\n");
+        return 1;
+    }
+    
+    printf("Inserisci il coefficente %d:",poly->size);
     //c = getchar(); getchar(); 
     // Leggo una stringa
     scanf(" %5s",s);
-    printf("Stringa letta: %s\n",s);
+    printf("Strina letta: %s\n",s);
     
     //Controllo per verifare se ho letto 'f'
     if( s[0] == 'f' ){
@@ -33,14 +50,22 @@ int inserisci_elemento_polinomio(struct polinomio *poly){
     //https://en.cppreference.com/w/cpp/string/byte/atoi
     n = atoi(s);
     //Inserisco l'elemento dentro al vettore
-    //!Importante capire perché non devo dereferenziare
     poly->vett[(poly->size)++] = n;
+    // Questa è equivalente
+    // poly->vett[poly->size] = n;
+    // poly->size++; // Oppure poly->size += 1; 
+    
+    // Non è equivalente a questa
+    // poly->vett[++(poly->size)] = n;
+    // E equivalente a
+    // poly->size++;
+    // poly->vett[poly->size] = n;
 
     return 0;
 }
 
 // Creare un nuovo polinomio
-void nuovo_polinomio(struct polinomio *poly){
+void nuovo_polinomio(struct polinomio* poly){
     // Variabile di ciclo
     int fine = 0;
     // Reset della dimensione del polinomio
@@ -51,12 +76,14 @@ void nuovo_polinomio(struct polinomio *poly){
         // Inserisco un elemento nel vettore
         fine = inserisci_elemento_polinomio(poly);
         // Stampa del vettore
-        mostra_polinomio(poly);
+        stampa_vettore_polinomio(poly);
     }
+    // Il polinomio è
+    mostra_polinomio(poly);
 }
 
 // Salva un polinomio su FILE
-void salva_polinomio(const struct polinomio *poly){
+void salva_polinomio(const struct polinomio* poly){
     // Variabile nome del file del polinomio
     char s[10];
 
@@ -94,7 +121,7 @@ void salva_polinomio(const struct polinomio *poly){
 }
 
 // Carica un polinomio da FILE
-void carica_polinomio(struct polinomio *poly){
+void carica_polinomio(struct polinomio* poly){
     // Variabile nome del file del polinomio
     char s[10];
 
@@ -116,20 +143,20 @@ void carica_polinomio(struct polinomio *poly){
     fscanf(file, "%d\n", &poly->size);
     // Leggo gli elementi del polinomio
     fscanf(file, "[");
-    for(j = 0; j <  poly->size-1; j++){
+    for(j = 0; j < poly->size-1; j++){
         // Leggo i coefficenti del polinomio
         fscanf(file, "%d,", &poly->vett[j]);
     }
     fscanf(file, "%d]", &poly->vett[j]);
 
-    // Stampa del vettore
+    // Stampa del polinomio
     mostra_polinomio(poly);
 
     // Chiudere il file
     fclose(file);
 }
 
-void mostra_polinomio(const struct polinomio *poly){
+void mostra_polinomio(const struct polinomio* poly){
     // Variabile di ciclo
     int j;
     // variabile di appoggio per la stampa
@@ -171,7 +198,7 @@ void mostra_polinomio(const struct polinomio *poly){
     printf("\n");
 }
 
-void valuta_polinomio(const struct polinomio *poly){
+void valuta_polinomio(const struct polinomio* poly){
     // File per la valutazione del polinomio
     FILE *file;
 
@@ -214,12 +241,13 @@ void valuta_polinomio(const struct polinomio *poly){
     fclose(file);
 } 
 
-// Somma polinomi
-void somma(const struct polinomio *a, const struct polinomio *b, struct polinomio *r){
-    // Variabile di ciclo
-    int j;
-    // Massima e minima dimensione
-    int min_size, max_size;
+// Funzione che somma due polinomi
+void somma_polinomi(const struct polinomio* a, const struct polinomio* b, struct polinomio* r){
+
+    // Polinomio dimensioni massime e minime
+    int max_size, min_size;
+
+    // Determina quale polinomio e' più grande
     if(a->size < b->size){
         min_size = a->size;
         max_size = b->size;
@@ -227,14 +255,16 @@ void somma(const struct polinomio *a, const struct polinomio *b, struct polinomi
         min_size = b->size;
         max_size = a->size;
     }
-    // Setto la massima dimensione al polinomio di uscita
+
+    // Configurato la dimensione di res
     r->size = max_size;
-    // Determino la massima dimensione
-    for(j = 0; j < max_size; j++){
+    // Ciclo fino alla dimensione del polinomio piu' grande
+    for(int j = 0; j < max_size; j++){
         if(j < min_size){
+            // Configuro gli elementi fino a min_size
             r->vett[j] = a->vett[j] + b->vett[j];
         }else{
-            // Configuro gli ultimi elementi
+            // Configuro gli elementi da min_size a max_size
             if(max_size == b->size){
                 r->vett[j] = b->vett[j];
             }else{
@@ -242,11 +272,10 @@ void somma(const struct polinomio *a, const struct polinomio *b, struct polinomi
             }
         }
     }
-    mostra_polinomio(r);
 }
 
-// Moltiplica polinomi
-void moltiplica(const struct polinomio *a, const struct polinomio *b, struct polinomio *r){
+// Funzione che moltiplica due polinomi
+void moltiplica_polinomi(const struct polinomio* a, const struct polinomio* b, struct polinomio* res){
     // Variabile di ciclo
     int i, j;
 
@@ -265,5 +294,4 @@ void moltiplica(const struct polinomio *a, const struct polinomio *b, struct pol
             r->vett[i+j] += a->vett[j] * b->vett[i];
         }
     }    
-    mostra_polinomio(r);
 }
