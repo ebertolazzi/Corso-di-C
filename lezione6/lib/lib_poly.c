@@ -275,7 +275,7 @@ void somma_polinomi(const struct polinomio* a, const struct polinomio* b, struct
 }
 
 // Funzione che moltiplica due polinomi
-void moltiplica_polinomi(const struct polinomio* a, const struct polinomio* b, struct polinomio* res){
+void moltiplica_polinomi(const struct polinomio* a, const struct polinomio* b, struct polinomio* r){
     // Variabile di ciclo
     int i, j;
 
