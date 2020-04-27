@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "lib/lista.h"
+#include "lista.h"
 
 void print_lista(Elem *base){
     printf("\n");
