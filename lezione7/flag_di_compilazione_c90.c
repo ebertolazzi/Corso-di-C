@@ -14,10 +14,11 @@ int main(){
     float b = 0.5;
     int c = (int)b;
     double d = 1.1/2.0;
-    unsigned int e = 4294966996;
+    unsigned int e = 4294966996L;
     int f;
     int r;
     int unused __attribute__((unused));
+
 
     /* int a; -Wall => In particolare questo -Wuninitialized */
     if(a == 1){
