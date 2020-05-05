@@ -77,10 +77,7 @@ void nuovo_polinomio(struct polinomio* poly){
 }
 
 // Salva un polinomio su FILE
-void salva_polinomio(const struct polinomio* poly){
-    // Variabile nome del file del polinomio
-    char s[10];
-
+void salva_polinomio(char *nome_file, const struct polinomio* poly){
     // Puntatore al file dove sara salvato il polinomio
     FILE *file;
 
@@ -93,12 +90,8 @@ void salva_polinomio(const struct polinomio* poly){
         return;
     }
 
-    printf("Inserisci nome del polinomio:");
-    //Lettura del nome del file del polinomio
-    scanf(" %10s",s);
-
     // Apertura file polinomio
-    file = apri_file(s,"w");
+    file = apri_file(nome_file,"w");
 
     // Stampare il polinomio su file
     // Stampo la dimensione per prima cosi so quanti coefficenti è composto il polinomio nel momento in cui dovro' caricarlo
@@ -114,23 +107,22 @@ void salva_polinomio(const struct polinomio* poly){
     fclose(file);
 }
 
-// Carica un polinomio da FILE
-void carica_polinomio(struct polinomio* poly){
-    // Variabile nome del file del polinomio
-    char s[10];
+void scegli_nome_polinomio(char *nome_file){
+    printf("Inserisci nome del polinomio:");
+    //Lettura del nome del file del polinomio
+    scanf(" %10s",nome_file);
+}
 
+// Carica un polinomio da FILE
+void carica_polinomio(char * nome_file, struct polinomio* poly){
     // Puntatore al file del polinomio che sara caricato
     FILE *file;
 
     // Variabile del ciclo di lettura
     int j;
 
-    printf("Inserisci nome del polinomio da caricare:");
-    //Lettura del nome del file del polinomio
-    scanf(" %10s",s);
-
     // Apertura file polinomio
-    file = apri_file(s,"r");
+    file = apri_file(nome_file,"r");
 
     // Leggiamo il polinomio da file
     // Leggo la dimensione del polinomio
@@ -163,7 +155,6 @@ void mostra_polinomio(const struct polinomio* poly){
         return;
     }
 
-    printf("Il polinomio è:");
     // Ciclo del polinomio per la stampa
     for(j = poly->size-1; j >= 0 ; j--){
         if(poly->vett[j] < 0){

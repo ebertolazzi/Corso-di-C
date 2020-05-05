@@ -57,10 +57,13 @@ int inserisci_elemento_polinomio(struct polinomio* poly);
 void nuovo_polinomio(struct polinomio* poly);
 
 // Salva un polinomio su FILE
-void salva_polinomio(const struct polinomio* poly);
+void salva_polinomio(char* nome_file, const struct polinomio* poly);
+
+// Funzione che permette di inserire il nome del file del polinomio
+void scegli_nome_polinomio(char *nome_file);
 
 // Carica un polinomio da FILE
-void carica_polinomio(struct polinomio* poly);
+void carica_polinomio(char* nome_file, struct polinomio* poly);
 
 // Stampa il polinomio a video
 void mostra_polinomio(const struct polinomio* poly);

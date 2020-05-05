@@ -16,7 +16,7 @@ typedef struct elem Elem;
 void inserisci_in_cima(Elem **base, Elem *el);
 
 // Funzione che inserisce in fondo alla lista
-void inserisci_in_fondo(Elem **base, Elem *el);
+int inserisci_in_fondo(Elem **base, Elem *el);
 
 // Funzione che inserisce in una posizione data
 void inserisci_at(Elem **base, Elem *el, int ind);

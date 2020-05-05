@@ -11,7 +11,9 @@ void inserisci_in_cima(Elem **base, Elem *el){
 }
 
 
-void inserisci_in_fondo(Elem **base, Elem *el){
+int inserisci_in_fondo(Elem **base, Elem *el){
+    // Posizione ritornata
+    int pos = 0;
     // Copio l'indirizzo del primo elemento puntato dalla base in una variabile di appoggio
     Elem *aux = (*base);
     // Controllo se la lista è vuota
@@ -21,11 +23,15 @@ void inserisci_in_fondo(Elem **base, Elem *el){
         // Il puntatore next dell'elemento inserito punta al vecchio primo elemento
         el->next = aux;
     }else{
+        // Seconda posizione 
+        pos += 1;
         // Scorre la lista
-        for(; aux->next != NULL; aux = aux->next);
+        for(; aux->next != NULL; aux = aux->next, pos++);
         // Assegnare al puntatore next dell'ultimo elemento il nuovo elemento
         aux->next = el;
     }
+    // Posizione ritornata
+    return pos;
 }
 
 void inserisci_at(Elem **base, Elem *el, int ind){
