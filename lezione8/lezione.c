@@ -7,7 +7,7 @@
 #include "lib/lib_lista_poly.h"
 
 // Vettore di polinomi
-Elem *base_poly;
+Elem *base_poly = NULL;
 
 int scegli_indice(char *string){
     int d;
@@ -41,7 +41,7 @@ void ciclo_principale(){
 
         switch (c) {
             case 'n':
-                p = malloc(sizeof(Elem));
+                p = calloc(1,sizeof(Elem));
                 nuovo_polinomio(&p->poly);
                 inserisci_in_cima(&base_poly, p);
                 printf("Il nuovo polinomio in posizione 0 è:\n");
@@ -49,10 +49,10 @@ void ciclo_principale(){
                 break;
 
             case 'c':
-                p = malloc(sizeof(Elem));
+                p = calloc(1,sizeof(Elem));
                 carica_polinomio(&p->poly);
-                inserisci_in_cima(&base_poly, p);
-                printf("Il polinomio caricato da file in posizione 0 è:\n");
+                int d = inserisci_in_fondo(&base_poly, p);
+                printf("Il polinomio caricato da file in posizione %d è:\n", d);
                 mostra_polinomio(&p->poly);
                 break;
 
