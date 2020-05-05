@@ -100,7 +100,7 @@ void ciclo_principale(){
                 }else{
                     mostra_polinomio(&pp->poly);
                 }
-                ppp = malloc(sizeof(Elem));
+                ppp = calloc(1, sizeof(Elem));
                 somma_polinomi(&p->poly,&pp->poly,&ppp->poly);
                 //ppp->poly = somma_polinomi_valore(&p->poly,&pp->poly);
                 inserisci_in_cima(&base_poly, ppp);
@@ -125,7 +125,7 @@ void ciclo_principale(){
                 }else{
                     mostra_polinomio(&pp->poly);
                 }
-                ppp = malloc(sizeof(Elem));
+                ppp = calloc(1,sizeof(Elem));
                 moltiplica_polinomi(&p->poly,&pp->poly,&ppp->poly);
                 inserisci_in_cima(&base_poly, ppp);
                 printf("Il polinomio risultato in posizione 0 è:\n");
