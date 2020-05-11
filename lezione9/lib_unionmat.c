@@ -92,5 +92,85 @@ void nuova_matrice(UnionMat* mat){
             }       
         }
     }
+}
 
+UnionMat somma_matrice(const UnionMat* a, const UnionMat* b){
+    UnionMat c;
+    if(a->tipo == ELEMENTO || b->tipo == ELEMENTO){
+        // Caso in cui ho almeno un elemento
+        const UnionMat *elemento = a->tipo == ELEMENTO ? a : b;
+        const UnionMat *altro = elemento == a ? b : a;
+        switch (vet_mat->tipo){
+            case ELEMENTO:
+                c.tipo = ELEMENTO;
+                c.data.val = a->data.val + b->data.val;
+                break;
+
+            case VETTORE_COLONNA:
+            case VETTORE_RIGA:
+                if(altro->tipo == VETTORE_COLONNA){
+                    c.tipo = VETTORE_COLONNA;
+                }else{
+                    c.tipo = VETTORE_RIGA;
+                }
+                c.data.vet.val = malloc(altro->data.vet.size * sizeof(double));
+                for (int i = 0; i < altro->data.vet.size ; i++){
+                    c.data.vet.val[i] = elemento->data.val + altro->data.vet.val[i];         
+                }
+                break;
+
+            case MATRICE:
+                c.tipo = MATRICE;
+                c.data.mat.size_x = altro->data.mat.size_x;
+                c.data.mat.size_y = altro->data.mat.size_y;
+                c.data.mat.val = (double**)malloc(altro->data.mat.size_y * sizeof(double));
+                for (int i = 0; i < altro->data.mat.size_y ; i++){
+                    c.data.mat.val[i] = malloc(altro->data.mat.size_x * sizeof(double));
+                    for (int j = 0; j < c.data.mat.size_x ; j++){
+                        c.data.mat.val[i][j] = elemento->data.val + altro->data.mat.val[i][j];            
+                    }       
+                }
+                break;
+        }
+    }else{
+        // Caso in cui sono entrambi o vettori o matrici
+        switch (a->tipo){
+            case VETTORE_COLONNA:
+            case VETTORE_RIGA:
+                if( a->data.vet.size == b->data.vet.size && a->tipo == b->tipo){
+                    if(a->tipo == VETTORE_COLONNA){
+                        c.tipo = VETTORE_COLONNA;
+                    }else{
+                        c.tipo = VETTORE_RIGA;
+                    }
+                    c.data.vet.val = malloc(a->data.vet.size * sizeof(double));
+                    for (int i = 0; i < a->data.vet.size ; i++){
+                        c.data.vet.val[i] = a->data.vet.val[i] + b->data.vet.val[i];         
+                    }
+                }else{
+                    printf("Dimensione non coerente\n");
+                    exit(EXIT_FAILURE);
+                }
+                break;
+
+            case MATRICE:
+                if(a->data.mat.size_x == b->data.mat.size_x && a->data.mat.size_y == b->data.mat.size_y && a->tipo == b->tipo){
+                    c.tipo = MATRICE;
+                    c.data.mat.size_x = a->data.mat.size_x;
+                    c.data.mat.size_y = a->data.mat.size_y;
+                    c.data.mat.val = (double**)malloc(a->data.mat.size_y * sizeof(double));
+                    for (int i = 0; i < c.data.mat.size_y ; i++){
+                        c.data.mat.val[i] = malloc(a->data.mat.size_x * sizeof(double));
+                        for (int j = 0; j < c.data.mat.size_x ; j++){
+                            c.data.mat.val[i][j] = a->data.mat.val[i][j] + b->data.mat.val[i][j];            
+                        }       
+                    }
+                }else{
+                    printf("Dimensione non coerente\n");
+                    exit(EXIT_FAILURE);
+                }
+                break;
+        }
+    }
+    return c;
 }
