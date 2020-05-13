@@ -100,7 +100,7 @@ UnionMat somma_matrice(const UnionMat* a, const UnionMat* b){
         // Caso in cui ho almeno un elemento
         const UnionMat *elemento = a->tipo == ELEMENTO ? a : b;
         const UnionMat *altro = elemento == a ? b : a;
-        switch (vet_mat->tipo){
+        switch (altro->tipo){
             case ELEMENTO:
                 c.tipo = ELEMENTO;
                 c.data.val = a->data.val + b->data.val;
