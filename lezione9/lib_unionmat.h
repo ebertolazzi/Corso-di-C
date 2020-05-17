@@ -40,6 +40,6 @@ void nuova_matrice(UnionMat* mat);
 
 UnionMat somma_matrice(const UnionMat* a, const UnionMat* b);
 
-// UnionMat moltiplica_matrice(const UnionMat* a, const UnionMat* b);
+UnionMat moltiplica_matrice(const UnionMat* a, const UnionMat* b);
 
 // int determinante(const UnionMat* mat);
