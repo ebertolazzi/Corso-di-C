@@ -158,9 +158,9 @@ UnionMat somma_matrice(const UnionMat* a, const UnionMat* b){
                     c.tipo = MATRICE;
                     c.data.mat.size_x = a->data.mat.size_x;
                     c.data.mat.size_y = a->data.mat.size_y;
-                    c.data.mat.val = (double**)malloc(a->data.mat.size_y * sizeof(double));
+                    c.data.mat.val = (double**)malloc(c.data.mat.size_y * sizeof(double));
                     for (int i = 0; i < c.data.mat.size_y ; i++){
-                        c.data.mat.val[i] = malloc(a->data.mat.size_x * sizeof(double));
+                        c.data.mat.val[i] = malloc(c.data.mat.size_x * sizeof(double));
                         for (int j = 0; j < c.data.mat.size_x ; j++){
                             c.data.mat.val[i][j] = a->data.mat.val[i][j] + b->data.mat.val[i][j];            
                         }       
@@ -168,6 +168,132 @@ UnionMat somma_matrice(const UnionMat* a, const UnionMat* b){
                 }else{
                     printf("Dimensione non coerente\n");
                     exit(EXIT_FAILURE);
+                }
+                break;
+        }
+    }
+    return c;
+}
+
+UnionMat moltiplica_matrice(const UnionMat* a, const UnionMat* b){
+    UnionMat c;
+    if(a->tipo == ELEMENTO || b->tipo == ELEMENTO){
+        // Caso in cui ho almeno un elemento
+        const UnionMat *elemento = a->tipo == ELEMENTO ? a : b;
+        const UnionMat *altro = elemento == a ? b : a;
+        switch (altro->tipo){
+            case ELEMENTO:
+                c.tipo = ELEMENTO;
+                c.data.val = a->data.val * b->data.val;
+                break;
+
+            case VETTORE_COLONNA:
+            case VETTORE_RIGA:
+                if(altro->tipo == VETTORE_COLONNA){
+                    c.tipo = VETTORE_COLONNA;
+                }else{
+                    c.tipo = VETTORE_RIGA;
+                }
+                c.data.vet.val = malloc(altro->data.vet.size * sizeof(double));
+                for (int i = 0; i < altro->data.vet.size ; i++){
+                    c.data.vet.val[i] = elemento->data.val * altro->data.vet.val[i];         
+                }
+                break;
+
+            case MATRICE:
+                c.tipo = MATRICE;
+                c.data.mat.size_x = altro->data.mat.size_x;
+                c.data.mat.size_y = altro->data.mat.size_y;
+                c.data.mat.val = (double**)malloc(altro->data.mat.size_y * sizeof(double));
+                for (int i = 0; i < altro->data.mat.size_y ; i++){
+                    c.data.mat.val[i] = malloc(altro->data.mat.size_x * sizeof(double));
+                    for (int j = 0; j < c.data.mat.size_x ; j++){
+                        c.data.mat.val[i][j] = elemento->data.val * altro->data.mat.val[i][j];            
+                    }       
+                }
+                break;
+        }
+    }else{
+        // Caso in cui sono entrambi o vettori o matrici
+        switch (a->tipo){
+            case VETTORE_COLONNA:
+                // Caso (VETTORE_COLONNA) Nx1 * (VETTORE_RIGA) 1xM = (MATRICE) NxM 
+                if( b->tipo == VETTORE_RIGA ){
+                    c.tipo = MATRICE;
+                    c.data.mat.size_x = b->data.vet.size;
+                    c.data.mat.size_y = a->data.vet.size;
+                    c.data.mat.val = (double**)malloc(c.data.mat.size_y * sizeof(double));
+                    for (int i = 0; i < c.data.mat.size_y ; i++){
+                        c.data.mat.val[i] = malloc(c.data.mat.size_x * sizeof(double));
+                        for (int j = 0; j < c.data.mat.size_x ; j++){
+                            c.data.mat.val[i][j] = a->data.vet.val[i] * b->data.vet.val[j];            
+                        }       
+                    }
+                    break;
+                }
+                // Caso (VETTORE_COLONNA) Nx1 * (MATRICE) MxK non coerente 
+                printf("Dimensione non coerente\n");
+                exit(EXIT_FAILURE);
+
+            case VETTORE_RIGA:
+                // Caso (VETTORE_RIGA) 1xN * (VETTORE_COLONNA) Nx1 = (ELEMENTO) 1x1
+                if( b->tipo == VETTORE_COLONNA && a->data.vet.size == b->data.vet.size){
+                    c.tipo = ELEMENTO;
+                    c.data.val = 0;
+                    for (int i = 0; i < a->data.vet.size ; i++){
+                        c.data.val += a->data.vet.val[i] * b->data.vet.val[i];         
+                    }
+                    break;
+                }
+                // Caso (VETTORE_RIGA) 1xN * (MATRICE) NxM = (VETTORE_RIGA) 1xM
+                if( b->tipo == MATRICE && a->data.vet.size == b->data.mat.size_y){
+                    c.tipo = VETTORE_RIGA;
+                    c.data.vet.size = b->data.mat.size_x;
+                    c.data.vet.val = malloc(b->data.mat.size_x * sizeof(double));
+                    for (int j = 0; j < b->data.mat.size_x ; j++){
+                        c.data.vet.val[j] = 0;
+                        for (int i = 0; i < b->data.mat.size_y ; i++){
+                            c.data.vet.val[j] += a->data.vet.val[i] * b->data.mat.val[i][j];         
+                        }
+                    }
+                }else{
+                    printf("Dimensione non coerente\n");
+                    exit(EXIT_FAILURE);
+                }
+                break;
+
+            case MATRICE:
+                // Caso (MATRICE) MxN * (VETTORE_COLONNA) Nx1 = (VETTORE_COLONNA) Mx1
+                if( b->tipo == VETTORE_COLONNA && a->data.mat.size_x == b->data.vet.size){
+                    c.tipo = VETTORE_COLONNA;
+                    c.data.vet.size = a->data.mat.size_y;
+                    c.data.vet.val = malloc(a->data.mat.size_y * sizeof(double));
+                    for (int i = 0; i < a->data.mat.size_y ; i++){
+                        c.data.vet.val[i] = 0;
+                        for (int j = 0; j < a->data.mat.size_x ; j++){
+                            c.data.vet.val[i] += a->data.mat.val[i][j] * b->data.vet.val[j];         
+                        }
+                    }
+                    break;
+                }
+                // Caso (MATRICE) MxN * (MATRICE) NxK = (MATRICE) MxK
+                if( b->tipo == MATRICE && a->data.mat.size_x == b->data.mat.size_y ){
+                    c.tipo = MATRICE;
+                    c.data.mat.size_x = a->data.mat.size_y;
+                    c.data.mat.size_y = b->data.mat.size_x;
+                    c.data.mat.val = (double**)malloc(c.data.mat.size_y * sizeof(double));
+                    for (int i = 0; i < c.data.mat.size_y ; i++){
+                        c.data.mat.val[i] = malloc(c.data.mat.size_x * sizeof(double));
+                        for (int j = 0; j < c.data.mat.size_x ; j++){
+                            c.data.mat.val[i][j] = 0;    
+                            for (int k = 0; k < a->data.mat.size_x ; k++){
+                                c.data.mat.val[i][j] += a->data.mat.val[i][k] * b->data.mat.val[k][j];         
+                            }        
+                        }       
+                    }                    
+                }else{
+                    printf("Dimensione non coerente\n");
+                    exit(EXIT_FAILURE); 
                 }
                 break;
         }
