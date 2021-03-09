@@ -16,7 +16,7 @@ main() {
   long double h;
 
   printf("Print memory requirement for standard types\n");
-  printf("sizeof(char)        = %lu\n", sizeof(char));
+  printf("sizeof(char)        = %lu (bit %lu)\n", sizeof(char), sizeof(char)*8);
   printf("sizeof(int)         = %lu\n", sizeof(int));
   printf("sizeof(short)       = %lu\n", sizeof(short));
   printf("sizeof(long)        = %lu\n", sizeof(long));
