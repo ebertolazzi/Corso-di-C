@@ -12,7 +12,7 @@ fun_a /* Nome di funzione, deve cominciare con un carattere A-Z a-z */
     return 0;  /* ritorno di funzione */
 }
 
-int somma ( int a, int b) {   
+int somma ( int a, int b ) {   
     return a + b;
 }
 
