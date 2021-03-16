@@ -35,6 +35,6 @@ main() {
   > gcc -c esempio1.c
 
   # link dell codice eseguibile con librerie standard e del sistema operativo
-  > gcc esempio1.o -o esempio1
+  > gcc libes.esempio1.o -o esempio1
 
 */
