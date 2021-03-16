@@ -31,6 +31,9 @@ int main() {
 
     int  a = 4 /*B00000100*/, b = 5 /*B00000101*/, c = 5; /* definisco le variabili intere a, b, c */
 
+    /* OPERATORI */
+    /* https://www.tutorialspoint.com/cprogramming/c_operators.htm */
+    
     /* OPERAZIONI ARITMETICHE */
     /* https://publications.gbdirect.co.uk/c_book/chapter2/expressions_and_arithmetic.html */
     a = b + c; /* somma */
