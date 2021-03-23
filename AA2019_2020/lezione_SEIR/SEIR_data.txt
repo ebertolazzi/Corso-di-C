@@ -1,0 +1,18 @@
+#
+# file dati per modello SEIR
+# dati presi da: https://community.wolfram.com/groups/-/m/t/1888335
+#
+0.03  # alpha
+1.5   # beta
+0.025 # gamma
+#
+#  dato iniziale
+#
+0.99963 # S(0) = 1-100/270000
+0       # E(0)
+0.00037 # I(0) = 100/270000
+# R(0) omesso perche R = 1-S(0)-E(0)-I(0)
+# tempo di simulazione passo e ordine
+100  # tmax
+1    # passo integrazione
+6    # ordine metodo numerico
