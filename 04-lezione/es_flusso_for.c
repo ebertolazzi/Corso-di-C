@@ -1,6 +1,6 @@
 /*
  * Scrivere una funzione che prende in ingresso un intero e stampa a video
- * tutti i numeri in sequenza:
+ * tutti i numeri in sequenza fino al numero in ingresso:
  * numero 5
  * 1,2,3,4,5
  *  
