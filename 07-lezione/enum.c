@@ -3,6 +3,8 @@
 enum tag{
     A, B, C = 12, D
 };
+char *tipo_tag[] = {"A","B", "C", "D"}; 
+
 
 // Un modo carino di utilizzare gli enumereti è per definire dei tipi
 enum tipo{

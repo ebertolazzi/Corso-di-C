@@ -36,6 +36,7 @@ struct persona classe[10];
 
 int main(){
     topo.eta = 4;
+
     //Nota sui vettore di char o stringhe
     // char a[20];
     // a = "stringa";   // error
@@ -48,18 +49,19 @@ int main(){
     strcpy(topo.nome, "Topolino");
 
     // Inizializzazione veloce di una struttura durante la creazione
-    struct animale canarino = {"Michel",1};
+    //struct animale canarino = {"Michel",1};
 
     // Inizializzo il primo elemento del vettore di pensone in classe
     classe[0].eta = 5;
     strcpy(classe[0].nome, "Giovanni");
 
-    // Creo un puntatore a persona e lo assegno con il terzo elemento della classe
+    // Creo un puntatore a persona e lo assegno con l'indirizzo del terzo elemento della classe
     struct persona *el = &classe[2];
     
     // Quando uso un puntatore per accedere ad un campo della struttura
     // Devo utilizzare l'operatore ->.
-    strcpy(el->nome, "Giovanni");
+    strcpy(classe[2].nome , "Giovanni");
+    strcpy(el->nome, "Giovanni"); //strcpy((*el).nome, "Giovanni");
     el->eta = 22;
     el->peso = 65;
     el->altezza = 1.53;

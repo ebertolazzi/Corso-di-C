@@ -11,8 +11,14 @@ union generico {
 // Creo una struttura con un campo unione
 // L'ementento può essere uno di quei tre
 // e per sapere che tipo è leggo il contenuto di tipo_union
+enum tipo{
+    REALE=0, CARATTERE=1, INTERO=2
+};
+
+tipo_union = CARATTERE;
+
 struct var_tipo{
-      int tipo_union;
+      enum tipo tipo_union;
       union {
               float   reale;
               char    carattere;
@@ -22,8 +28,9 @@ struct var_tipo{
 
 int main(){
     union generico var; 
-    var.reale = 23.5;
+    var.reale = 239293293293.5;
     printf("var = %f (%ld, dim union: %ld)\n", var.reale,sizeof(var.reale),sizeof(var));
+    printf("var = %d (%ld, dim union: %ld)\n", var.intero,sizeof(var.intero),sizeof(var));
     var.intero = 5;
     printf("var = %d (%ld, dim union: %ld)\n", var.intero,sizeof(var.intero),sizeof(var));
     
