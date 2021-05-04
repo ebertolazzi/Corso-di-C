@@ -7,7 +7,7 @@
  * e la resistenza dell fondamenta sono adeguate al veicolo in questione.
  * Scrivere una funzione che dato un vettore di veicoli ritorna quello più pesante.
  * Scrivere una funzione che dato un vettore di veicoli ritorna quello più grande (maggior volume).
- * Scrivere una funzione assegna al garage il veicolo corrispondente.
+ * Scrivere una funzione che assegna al garage il veicolo corrispondente.
  */
 #include <stdio.h>
 

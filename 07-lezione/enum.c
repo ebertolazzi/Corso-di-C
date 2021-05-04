@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 enum tag{
-    A, B, C = 12, D
+    A, B, C, D
 };
 char *tipo_tag[] = {"A","B", "C", "D"}; 
 
