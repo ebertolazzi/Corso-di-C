@@ -1,0 +1,8 @@
+population = 60000000
+I0         = 1000
+RT0        = 1.1
+incubation = 4.25
+recovery   = 8
+order      = 3
+delta_t    = 6
+t_max      = 365
