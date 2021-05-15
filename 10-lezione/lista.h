@@ -1,5 +1,11 @@
 #include <time.h>
 
+// Data
+struct oggetto{
+    char nome[20];
+    int data;
+};
+
 // Elemento della lista
 struct elem
 {
@@ -7,11 +13,6 @@ struct elem
     struct oggetto obj;
     // Puntatore all'elemento successivo
     struct elem *next;
-};
-
-struct oggetto{
-    char nome[20];
-    time_t ora;
 };
 
 // Shortcut per definire oggetti di tipo struct elem
