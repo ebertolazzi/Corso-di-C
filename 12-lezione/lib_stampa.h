@@ -1,0 +1,1 @@
+void stampa(int array[], int size);
