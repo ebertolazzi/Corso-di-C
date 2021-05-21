@@ -114,11 +114,6 @@ void scelgo_algoritmo(int vett[], int size){
                 fine = 1;
                 break;
 
-            case 's':
-                selection_sort(vett, size);
-                fine = 1;
-                break;
-
             default:
                 printf("Carattere errato.\n");
                 break;
