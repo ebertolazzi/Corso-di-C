@@ -32,5 +32,6 @@ int main()
     int dim;
     int *res = divisori(15, &dim);
     stampa(res, dim);
+    free(res);
     return 0;
 }
