@@ -4,7 +4,7 @@ int main(){
     int a = 5;
     // Assegnare una variabile in funzione del valore di un altra varibile
     // int g;
-    // if(a == 5){
+    // if(a < 5){
     //     g = 3;
     // }else{
     //     g = 6;

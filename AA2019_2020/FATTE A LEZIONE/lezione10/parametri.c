@@ -56,14 +56,14 @@ int main(
     char *argv[]    // Lista dei parametri
     ){
     //Stampato la lista dei parametri
-    // for(int i = 0; i < argc; i++){
-    //     printf("Parametro %d: %s\n",i,argv[i]);
-    // }
+    for(int i = 0; i < argc; i++){
+        printf("Parametro %d: %s\n",i,argv[i]);
+    }
 
     // Gestione di un singola tipologia di parametri
-    // if(argc == 2){
-    //     printf("Due parametri sono %s, %s\n", argv[1], argv[2]);
-    // }
+    if(argc == 3){
+        printf("Due parametri sono %s, %s\n", argv[1], argv[2]);
+    }
 
     // Gestione di tipologie varie di parametri
     // switch (argc)
@@ -80,8 +80,8 @@ int main(
     //     return EXIT_FAILURE;
     //     break;
     // }
-    int ind = 1;
-    while(leggo_parametro(argc, argv, &ind) == 0);
+    //int ind = 1;
+    //while(leggo_parametro(argc, argv, &ind) == 0);
 
     // Uscita standard
     return EXIT_SUCCESS;
